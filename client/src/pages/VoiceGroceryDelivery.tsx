@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import useWebRTCAudioSession from "@/hooks/use-webrtc-audio"
 import { ecommerceTools, type Product, type Order } from "@/lib/tools"
@@ -20,7 +19,6 @@ export default function VoiceGroceryDelivery() {
   const [isOrderPending, setIsOrderPending] = useState(false)
   const [isConnecting, setIsConnecting] = useState(false)
   const [address, setAddress] = useState("")
-  const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
   const [isWelcomePopupOpen, setIsWelcomePopupOpen] = useState(true)
   const conversationRef = useRef<HTMLDivElement>(null)

@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect, useCallback } from "react"
 import useWebRTCAudioSession from "@/hooks/use-webrtc-audio"
 import { ecommerceTools, type Product } from "@/lib/tools"

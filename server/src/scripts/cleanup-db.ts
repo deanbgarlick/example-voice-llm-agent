@@ -18,46 +18,47 @@ async function cleanup(mongoService: MongoService, options: CleanupOptions = {})
   }
 
   if (!options.force) {
-    console.log('⚠️  This will delete all data from the following collections:');
+    console.log('⚠️  This will completely remove the following collections and their indexes:');
     collections.forEach(name => console.log(`   - ${name}`));
     console.log('\nTo proceed, run with --force');
     return;
   }
 
-  // Drop indexes and collections
+  // Drop collections and all their indexes
   for (const name of collections) {
-    const collection = mongoService.getCollection(name);
-    
     try {
-      // Check if collection exists
-      const collectionExists = await collection.countDocuments({}, { limit: 1 }) >= 0;
+      const db = mongoService.getDb();
+      const collection = mongoService.getCollection(name);
       
-      if (!collectionExists) {
-        console.log(`ℹ️  Collection '${name}' does not exist, skipping...`);
-        continue;
-      }
-
-      // Get document count
-      const count = await collection.countDocuments();
-      console.log(`📊 Found ${count} documents in '${name}'`);
-
-      if (options.dryRun) {
-        console.log(`🔍 Would delete all documents from '${name}'`);
-        console.log(`🔍 Would drop all indexes from '${name}'`);
-        continue;
-      }
-
-      // Drop indexes first
       try {
-        await collection.dropIndexes();
-        console.log(`✅ Dropped all indexes from '${name}'`);
-      } catch (e) {
-        console.log(`ℹ️  No indexes to drop in '${name}'`);
-      }
+        // Check if collection exists
+        const collectionInfo = await db.listCollections({ name: collection.collectionName }).next();
+        
+        if (!collectionInfo) {
+          console.log(`ℹ️  Collection '${name}' does not exist, skipping...`);
+          continue;
+        }
 
-      // Delete all documents
-      const result = await collection.deleteMany({});
-      console.log(`✅ Deleted ${result.deletedCount} documents from '${name}'`);
+        // Get document count before dropping
+        const count = await collection.countDocuments();
+        console.log(`📊 Found ${count} documents in '${name}'`);
+
+        if (options.dryRun) {
+          console.log(`🔍 Would drop collection '${name}' and all its indexes`);
+          continue;
+        }
+
+        // Drop the entire collection (this removes all documents, indexes including Atlas Search indexes)
+        await db.dropCollection(collection.collectionName);
+        console.log(`✅ Dropped collection '${name}' and all its indexes`);
+
+      } catch (error) {
+        if ((error as Error).message?.includes('ns not found')) {
+          console.log(`ℹ️  Collection '${name}' does not exist, skipping...`);
+        } else {
+          throw error;
+        }
+      }
 
     } catch (error) {
       console.error(`❌ Error cleaning up '${name}':`, error);

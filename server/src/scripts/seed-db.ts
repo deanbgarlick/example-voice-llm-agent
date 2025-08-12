@@ -156,7 +156,7 @@ async function createSearchIndexes(mongoService: MongoService, options: SeedOpti
         console.log('✅ Created Atlas Search index');
       } catch (e) {
         console.error('❌ Failed to create search index:', e);
-        if (e.message?.includes('maximum number of FTS indexes')) {
+        if ((e as Error).message?.includes('maximum number of FTS indexes')) {
           console.log('💡 Tip: This error is common on free MongoDB Atlas tiers');
         }
       }
@@ -189,7 +189,7 @@ async function createSearchIndexes(mongoService: MongoService, options: SeedOpti
         console.log('✅ Created vector search index');
       } catch (e) {
         console.error('❌ Failed to create vector index:', e);
-        if (e.message?.includes('maximum number of FTS indexes')) {
+        if ((e as Error).message?.includes('maximum number of FTS indexes')) {
           console.log('💡 Tip: This error is common on free MongoDB Atlas tiers');
         }
       }

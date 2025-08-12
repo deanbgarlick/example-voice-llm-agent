@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react"
 import { v4 as uuidv4 } from "uuid"
 
 export interface Tool {
+  type: "function"
   name: string
   description: string
   parameters?: Record<string, any>
@@ -51,6 +52,8 @@ export default function useWebRTCAudioSession(voice: string, tools?: Tool[]): Us
 
   function configureDataChannel(dataChannel: RTCDataChannel) {
     console.log("Configuring data channel")
+    console.log("Tools passed to hook:", tools)
+    console.log("Tools array length:", tools?.length || 0)
     const sessionUpdate = {
       type: "session.update",
       session: {
@@ -61,7 +64,7 @@ export default function useWebRTCAudioSession(voice: string, tools?: Tool[]): Us
         },
       },
     }
-    console.log("Sending session update:", sessionUpdate)
+    console.log("Sending session update:", JSON.stringify(sessionUpdate, null, 2))
     dataChannel.send(JSON.stringify(sessionUpdate))
   }
 
@@ -230,9 +233,14 @@ export default function useWebRTCAudioSession(voice: string, tools?: Tool[]): Us
   async function getSessionData() {
     try {
       console.log("Fetching session data from /api/session...")
+      console.log("Sending tools in session creation:", tools)
+      const requestBody = {
+        tools: tools || [],
+      }
       const response = await fetch("/api/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
       })
       console.log("Session response status:", response.status)
       if (!response.ok) {

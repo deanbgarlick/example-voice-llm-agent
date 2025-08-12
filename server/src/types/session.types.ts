@@ -4,6 +4,7 @@ export interface SessionConfig {
   modalities: string[];
   instructions: string;
   tool_choice: string;
+  tools?: any[];
 }
 
 export interface SessionResponse {

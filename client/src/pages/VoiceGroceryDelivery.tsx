@@ -53,6 +53,7 @@ export default function VoiceGroceryDelivery() {
     currentVolume,
   } = useWebRTCAudioSession("alloy", [
     {
+      type: "function",
       name: "searchProducts",
       description: "Search for grocery products by name, description, or category",
       parameters: {
@@ -71,6 +72,7 @@ export default function VoiceGroceryDelivery() {
       },
     },
     {
+      type: "function",
       name: "getProductDetails",
       description: "Get detailed information about a specific grocery product",
       parameters: {
@@ -85,6 +87,7 @@ export default function VoiceGroceryDelivery() {
       },
     },
     {
+      type: "function",
       name: "addToCart",
       description: "Add a grocery product to the shopping cart",
       parameters: {
@@ -105,6 +108,7 @@ export default function VoiceGroceryDelivery() {
       },
     },
     {
+      type: "function",
       name: "createOrder",
       description: "Create a new grocery delivery order from the shopping cart",
       parameters: {

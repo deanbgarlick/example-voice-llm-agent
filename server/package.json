@@ -7,7 +7,7 @@
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "lint": "eslint src/**/*.ts",
-    "seed": "node ./scripts/seed-db.js"
+    "seed": "ts-node src/scripts/seed-db.ts"
   },
       "dependencies": {
     "ai": "latest",

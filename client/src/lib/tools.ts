@@ -1,3 +1,5 @@
+import config from '../config';
+
 export interface Product {
     _id: string
     title: string
@@ -23,7 +25,7 @@ export interface Product {
       if (query) params.append("query", query)
       if (category && category !== "all") params.append("category", category)
   
-      const response = await fetch(`/api/products?${params}`)
+      const response = await fetch(`${config.apiUrl}/api/products?${params}`)
       if (!response.ok) {
         throw new Error("Failed to fetch products")
       }
@@ -31,7 +33,7 @@ export interface Product {
     },
   
     getProductDetails: async ({ productId }: { productId: string }) => {
-      const response = await fetch(`/api/products?productId=${encodeURIComponent(productId)}`)
+      const response = await fetch(`${config.apiUrl}/api/products?productId=${encodeURIComponent(productId)}`)
       if (!response.ok) {
         throw new Error("Failed to fetch product details")
       }
@@ -48,7 +50,7 @@ export interface Product {
     },
   
     createOrder: async (items: Array<{ product: Product; quantity: number }>, address: string): Promise<Order> => {
-      const response = await fetch("/api/orders", {
+      const response = await fetch(`${config.apiUrl}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react"
+import config from "@/config"
 import useWebRTCAudioSession from "@/hooks/use-webrtc-audio"
 import { ecommerceTools, type Product } from "@/lib/tools"
 import { WelcomePopup } from "@/components/welcome-popup"
@@ -158,7 +159,7 @@ export default function VoiceGroceryDelivery() {
   useEffect(() => {
     const fetchRandomProducts = async () => {
       try {
-        const response = await fetch("/api/products?random=true")
+        const response = await fetch(`${config.apiUrl}/api/products?random=true`)
         if (!response.ok) {
           throw new Error("Failed to fetch random products")
         }

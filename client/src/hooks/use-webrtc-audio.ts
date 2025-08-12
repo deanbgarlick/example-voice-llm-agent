@@ -229,12 +229,16 @@ export default function useWebRTCAudioSession(voice: string, tools?: Tool[]): Us
 
   async function getSessionData() {
     try {
+      console.log("Fetching session data from /api/session...")
       const response = await fetch("/api/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       })
+      console.log("Session response status:", response.status)
       if (!response.ok) {
-        throw new Error(`Failed to get session data: ${response.status}`)
+        const errorText = await response.text()
+        console.error("Session response error:", errorText)
+        throw new Error(`Failed to get session data: ${response.status} - ${errorText}`)
       }
       const data = await response.json()
       console.log("Session data received:", data)
@@ -312,7 +316,7 @@ export default function useWebRTCAudioSession(voice: string, tools?: Tool[]): Us
         audioEl.srcObject = event.streams[0]
         audioEl.play().catch((e) => console.error("Error playing audio:", e))
 
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+        const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)()
         const src = audioCtx.createMediaStreamSource(event.streams[0])
         const inboundAnalyzer = audioCtx.createAnalyser()
         inboundAnalyzer.fftSize = 256
@@ -354,8 +358,8 @@ export default function useWebRTCAudioSession(voice: string, tools?: Tool[]): Us
         throw new Error(`Failed to send offer: ${sdpResponse.status}`)
       }
 
-      const answer = {
-        type: "answer",
+      const answer: RTCSessionDescriptionInit = {
+        type: "answer" as RTCSdpType,
         sdp: await sdpResponse.text(),
       }
       await pc.setRemoteDescription(answer)

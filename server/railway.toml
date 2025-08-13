@@ -1,5 +1,6 @@
 [build]
 builder = "nixpacks"
+buildMemoryLimit = "4G"
 
 [deploy]
 healthcheckPath = "/health"

@@ -30,7 +30,7 @@ interface UseWebRTCAudioSessionReturn {
   conversation: Conversation[]
 }
 
-export default function useWebRTCAudioSession(voice: string, tools?: Tool[]): UseWebRTCAudioSessionReturn {
+export default function useWebRTCAudioSession(tools?: Tool[]): UseWebRTCAudioSessionReturn {
   const [status, setStatus] = useState("")
   const [isSessionActive, setIsSessionActive] = useState(false)
   const audioIndicatorRef = useRef<HTMLDivElement | null>(null)

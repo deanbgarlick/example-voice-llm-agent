@@ -5,6 +5,9 @@ import path from 'path';
 // Production configuration for Cloudflare Pages
 export default defineConfig({
   plugins: [react()],
+  define: {
+    'import.meta.env.VITE_API_URL': JSON.stringify('https://example-voice-llm-agent-production.up.railway.app'),
+  },
   build: {
     outDir: 'dist',
     sourcemap: false, // Disable for production

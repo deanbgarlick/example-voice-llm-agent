@@ -3,8 +3,7 @@ compatibility_date = "2024-01-15"
 
 [env.production]
 # Production environment variables
-# Uncomment and set your production API URL:
-# VITE_API_URL = "https://your-backend-api.com"
+VITE_API_URL = "https://example-voice-llm-agent-production.up.railway.app"
 
 [build]
 command = "npm run build"

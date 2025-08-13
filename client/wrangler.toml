@@ -1,4 +1,4 @@
-name = "voice-grocery-app"
+name = "example-llm-voice-agent"
 compatibility_date = "2024-01-15"
 workers_dev = true
 
@@ -11,5 +11,5 @@ command = "npm run build"
 bucket = "./dist"
 
 [env.production]
-name = "voice-grocery-app-production"
+name = "example-llm-voice-agent-production"
 VITE_API_URL = "https://example-voice-llm-agent-production.up.railway.app"

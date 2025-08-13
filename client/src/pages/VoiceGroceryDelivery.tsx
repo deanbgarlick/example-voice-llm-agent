@@ -51,7 +51,7 @@ export default function VoiceGroceryDelivery() {
     registerFunction,
     conversation,
     currentVolume,
-  } = useWebRTCAudioSession("alloy", [
+  } = useWebRTCAudioSession([
     {
       type: "function",
       name: "searchProducts",

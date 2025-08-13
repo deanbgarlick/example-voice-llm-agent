@@ -16,11 +16,35 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Debug environment
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+
+// CORS debugging middleware
+app.use((req, res, next) => {
+  console.log('Incoming request from origin:', req.headers.origin);
+  console.log('Request method:', req.method);
+  console.log('Request path:', req.path);
+  next();
+});
+
 // Middleware
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL || 'https://your-app.pages.dev']
-    : ['http://localhost:5173', 'https://localhost:5173'],
+  origin: (origin, callback) => {
+    const allowedOrigins = process.env.NODE_ENV === 'production'
+      ? ['https://example-voice-llm-agent.pages.dev']
+      : ['http://localhost:5173', 'https://localhost:5173'];
+    
+    console.log('Checking origin:', origin);
+    console.log('Allowed origins:', allowedOrigins);
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log('Origin not allowed:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());

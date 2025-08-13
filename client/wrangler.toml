@@ -6,10 +6,10 @@ compatibility_date = "2024-01-15"
 VITE_API_URL = "https://example-voice-llm-agent-production.up.railway.app"
 
 [build]
-command = "cd client && npm run build"
+command = "npm run build"
 
 [site]
-bucket = "client/dist"
+bucket = "dist"
 
 [assets]
-directory = "client/dist"
+directory = "dist"

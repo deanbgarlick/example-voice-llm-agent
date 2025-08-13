@@ -4,12 +4,12 @@ workers_dev = true
 
 main = "./dist/index.html"
 
-[env.production]
-# Production environment variables
-VITE_API_URL = "https://example-voice-llm-agent-production.up.railway.app"
-
 [build]
 command = "npm run build"
 
 [site]
 bucket = "./dist"
+
+[env.production]
+name = "voice-grocery-app-production"
+VITE_API_URL = "https://example-voice-llm-agent-production.up.railway.app"

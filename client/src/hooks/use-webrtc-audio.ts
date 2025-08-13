@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { v4 as uuidv4 } from "uuid"
+import config from "@/config"
 
 export interface Tool {
   type: "function"
@@ -237,7 +238,7 @@ export default function useWebRTCAudioSession(tools?: Tool[]): UseWebRTCAudioSes
       const requestBody = {
         tools: tools || [],
       }
-      const response = await fetch("/api/session", {
+      const response = await fetch(`${config.apiUrl}/api/session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),

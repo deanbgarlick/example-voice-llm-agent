@@ -1,5 +1,8 @@
 name = "voice-grocery-app"
 compatibility_date = "2024-01-15"
+workers_dev = true
+
+main = "./dist/index.html"
 
 [env.production]
 # Production environment variables
@@ -9,7 +12,4 @@ VITE_API_URL = "https://example-voice-llm-agent-production.up.railway.app"
 command = "npm run build"
 
 [site]
-bucket = "dist"
-
-[assets]
-directory = "dist"
+bucket = "./dist"

@@ -9,7 +9,7 @@
     "build:dev": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "deploy": "wrangler deploy --env production"
+    "deploy": "wrangler pages deploy ./dist --project-name=example-llm-voice-agent"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.6",

@@ -1,12 +1,7 @@
 name = "example-llm-voice-agent"
 compatibility_date = "2024-01-15"
 
-[build]
-command = "npm run build"
+pages_build_output_dir = "./dist"
 
-[site]
-bucket = "./dist"
-
-[env.production]
-name = "example-llm-voice-agent-production"
+[vars]
 VITE_API_URL = "https://example-voice-llm-agent-production.up.railway.app"
